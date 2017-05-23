@@ -1,0 +1,20 @@
+.kip_tab {
+	background-color: #e6e6e6;  
+	border:1px solid #b3b3b3; 
+	padding:5px 60px 5px 60px !important;
+} 
+.kip-charity-red {
+  color:#D7090A; 
+}     
+.kip-profile {
+  height: 90px;
+} 
+.kip-hide, #kip-datatable_filter, #kip-datatable_length {
+  visibility: hidden;
+}
+#kip-datatable { 
+  /*background: grey; */
+}  
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {  
+  background:#D7090A !important; 
+} 
