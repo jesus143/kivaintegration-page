@@ -2,12 +2,17 @@
 
 
 function kip_page_func() { 
-
-
+  
   $kip_kiva = new KIP\KIP_Kiva();
+ 
 
 
+ $posts = $kip_kiva->getAllPostFromKivaIntegration(); 
+  print "<pre>";
+  print_r($posts); 
+  print "</pre>";
 
+  // exit;
 
 
 
@@ -102,17 +107,16 @@ function kip_page_func() {
         <?php foreach( $kip_kiva->getAllPostFromKivaIntegration() as $lender) {    ?>
           <tr>
               <td> 
-                 <!-- <img src="http://www.bccollege.co.uk/assets/images/Manager.png" class="kip-profile" />  --> 
-                 <?php print $kip_kiva->getProfilePic($lender->id); ?> 
+                 <img src="http://www.bccollege.co.uk/assets/images/Manager.png" class="kip-profile" />   
             </td>
               <td>  
-                <p class="kip-charity-red"> Name: <?php echo $kip_kiva->getName($lender->id); ?></p>
-                <p class="kip-charity-red"> Bussiness:  <?php echo $kip_kiva->getBussinessName($lender->id); ?> </p>
-                <p><?php echo $kip_kiva->getDescription($lender->id); ?></p> 
+                <p class="kip-charity-red"> Name: person name</p>
+                <p class="kip-charity-red"> Bussiness:  Bussiness name here</p>
+                <p> This is the description! </p> 
               </td>
               <td> 
                 <p>Fund</p>
-                <p><?php echo $kip_kiva->getFund($lender->id); ?> </p> 
+                <p> $ 20,000 </p> 
               </td>  
 		      </tr>
 		<?php } ?>
