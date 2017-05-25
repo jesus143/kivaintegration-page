@@ -23,6 +23,8 @@ define('kip_plugin_path', plugin_dir_path( __FILE__ ));
 define('kip_plugin_url', get_site_url() . '/wp-content/plugins/kivaintegration-page'); 
  
 
+
+define('kip_root_dir', 'E:/xampp/htdocs/practice/wordpress/');
 /**
  * Create page when plugin si activated
  */ 
@@ -31,13 +33,21 @@ register_activation_hook( __FILE__, 'kip_insert_page' );
  /**
   * remove plugin page when deactivated 
   */
-register_deactivation_hook( __FILE__, 'kip_remove_page' ); 
- 
+register_deactivation_hook( __FILE__, 'kip_remove_page' );
 
-require_once(kip_plugin_path . 'inc/kivaintegration.page.class.php'); 
-require_once(kip_plugin_path . 'inc/shortcodes.php');  
+
+
+
+//require_once(kip_root_dir    . 'wp-includes/post.php');
+require_once(kip_plugin_path . 'inc/kivaintegration.page.class.php');
+require_once(kip_plugin_path . 'inc/KIP_Kiva.php');
+require_once(kip_plugin_path . 'inc/shortcodes.php');
 
 add_shortcode('kip_page', 'kip_page_func');   
+
+
+
+
 
  // $kivaIntegrationPage = new KivaIntegrationPageClass(); 
  // $kivaIntegrationPage->exec(); 

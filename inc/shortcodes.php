@@ -1,7 +1,39 @@
 <?php 
 
 
-function kip_page_func() {
+function kip_page_func() { 
+
+
+  $kip_kiva = new KIP\KIP_Kiva();
+
+
+
+
+
+
+
+ 
+// $partner = wp_remote_get( 'https://api.kivaws.org/v1/lenders/newest.json' ); 
+// $partners = json_decode($partner['body']);  
+// print "<pre>";
+//   print_r($partners->lenders); 
+// print "</pre>"; 
+// http://www.kiva.org/img/s300/2436621.jpg 
+
+// $lenders = 'http://api.kivaws.org/v1/loans/1234668.json';
+// $args = array(
+//   'headers' => array( "Content-type" => "application/json" )
+// );
+
+// $response = wp_remote_get( $loans,$args ); 
+// $data = json_decode($response['body']);
+
+// print "<pre>";
+//   print_r($data); 
+// print "</pre>"; 
+
+// exit;
+//  
 	 ?>
 
  
@@ -32,25 +64,25 @@ function kip_page_func() {
   <ul class="nav nav-pills">
     <li class="active"> 
    
-      <a data-toggle="pill" href="#home" class="kip_tab" >
-         <img src="<?php print kip_plugin_url . '/images/Archive/micro_finance.png' ?>" style="height:88px;" /> 
+      <a data-toggle="pill" href="#home" class="kip_tab" id="kip_tab" >
+         <img src="<?php print kip_plugin_url . '/images/Archive/micro_finance.png' ?>" style="height:88px;" /> <br>
         Micro Finance
       </a> 
  
     </li>
     <li>
-      <a data-toggle="pill" href="#menu1" class="kip_tab" >
-        <img src="<?php print kip_plugin_url . '/images/Archive/clean_water.png' ?>" style="height:88px;" /> 
+      <a data-toggle="pill" href="#menu1" class="kip_tab" id="kip_tab" >
+        <img src="<?php print kip_plugin_url . '/images/Archive/clean_water.png' ?>" style="height:88px;" />  <br>
         Clean Water
       </a>
       </li>
-    <li><a data-toggle="pill" href="#menu2" class="kip_tab" >
-     <img src="<?php print kip_plugin_url . '/images/Archive/your_charity.png' ?>" style="height:88px;" /> 
+    <li><a data-toggle="pill" href="#menu2" class="kip_tab" id="kip_tab" >
+     <img src="<?php print kip_plugin_url . '/images/Archive/your_charity.png' ?>" style="height:88px;" /> <br>
       Your Charity
       </a></li> 
   </ul> 
   <div class="tab-content">
-    <div id="home" class="tab-pane fade in active"> 
+    <div id="home" class="tab-pane active"> 
       <table id="kip-datatable" class="display" cellspacing="0" width="100%">
         <thead>
             <tr>
@@ -67,29 +99,31 @@ function kip_page_func() {
             </tr>
         </tfoot>
         <tbody> 
-        <?php for($i=0; $i<20; $i++) {   ?>
+        <?php foreach( $kip_kiva->getAllPostFromKivaIntegration() as $lender) {    ?>
           <tr>
               <td> 
-                 <img src="http://www.bccollege.co.uk/assets/images/Manager.png" class="kip-profile" /> 
+                 <!-- <img src="http://www.bccollege.co.uk/assets/images/Manager.png" class="kip-profile" />  --> 
+                 <?php print $kip_kiva->getProfilePic($lender->id); ?> 
             </td>
               <td>  
-                <p class="kip-charity-red"> Name: Jesus Erwin Suarez</p>
-                <p class="kip-charity-red"> Bussiness: Elite Source</p>
-                <p> This is the description for the specific task o this....</p> 
+                <p class="kip-charity-red"> Name: <?php echo $kip_kiva->getName($lender->id); ?></p>
+                <p class="kip-charity-red"> Bussiness:  <?php echo $kip_kiva->getBussinessName($lender->id); ?> </p>
+                <p><?php echo $kip_kiva->getDescription($lender->id); ?></p> 
               </td>
               <td> 
                 <p>Fund</p>
-                <p>$ 2,000</p> 
+                <p><?php echo $kip_kiva->getFund($lender->id); ?> </p> 
               </td>  
 		      </tr>
 		<?php } ?>
         </tbody>
     </table>       
     </div>
+
     <div id="menu1" class="tab-pane fade">
     	<br><br>
        <?php echo get_option('kip_clean_water_message'); ?>
-    </div>
+    </div> 
     <div id="menu2" class="tab-pane fade">
     <br><br>
            <h3>Coming soon!</h3>
@@ -101,10 +135,19 @@ function kip_page_func() {
  <script>
  	var jq = $.noConflict();
 	jq(document).ready(function() {
-		console.log("plugin page loaded kivaintegration page.");
+
+    $("#kip_tab").click(function(){
+        jq("#home").removeClass('show');
+        jq("#menu1").removeClass('show');
+        jq("#menu2").removeClass('show');  
+      })
+
+		  console.log("plugin page loaded kivaintegration page.");
 	    jq('#kip-datatable').DataTable({
 	       "pageLength": 8
 	    });
+
+
 	} ); 
   </script>
 </body>
